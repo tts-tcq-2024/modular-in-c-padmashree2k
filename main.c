@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "color_code.h"
+#include "telecom_wiring_color_code.h"
 
 int main() {
     // Print the reference manual for wiring personnel
