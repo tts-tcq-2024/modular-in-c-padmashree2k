@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "color_code.h"
+#include "telecom_wiring_color_code.h
 
 // Array of major colors
 const char* major_colors[MAJOR_COLOR_COUNT] = {"White", "Red", "Black", "Yellow", "Violet"};
