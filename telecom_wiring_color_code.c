@@ -1,4 +1,4 @@
-#include "color_pair.h"
+#include "telecom_wiring_color_code.h"
 #include <stdio.h>
 
 // Arrays storing names of Major and Minor Colors
