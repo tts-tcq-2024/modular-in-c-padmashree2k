@@ -1,13 +1,18 @@
-#ifndef COLOR_CODE_H
-#define COLOR_CODE_H
+#ifndef COLOR_PAIR_H
+#define COLOR_PAIR_H
 
-// Constants for major and minor colors
-#define MAJOR_COLOR_COUNT 5
-#define MINOR_COLOR_COUNT 5
+// Enum for Major and Minor Colors
+enum MajorColor { WHITE, RED, BLACK, YELLOW, VIOLET };
+enum MinorColor { BLUE, ORANGE, GREEN, BROWN, SLATE };
+
+// Structure to represent a color pair
+typedef struct {
+    enum MajorColor majorColor;
+    enum MinorColor minorColor;
+} ColorPair;
 
 // Function declarations
-const char* get_major_color(int index);
-const char* get_minor_color(int index);
-void print_color_reference();
-
-#endif // COLOR_CODE_H
+void ColorPairToString(const ColorPair* colorPair, char* buffer);
+ColorPair GetColorFromPairNumber(int pairNumber);
+int GetPairNumberFromColor(const ColorPair* colorPair);
+void printColorReferenceManual();
