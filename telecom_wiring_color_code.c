@@ -1,37 +1,45 @@
+#include "color_pair.h"
 #include <stdio.h>
-#include "telecom_wiring_color_code.h"
 
-// Array of major colors
-const char* major_colors[MAJOR_COLOR_COUNT] = {"White", "Red", "Black", "Yellow", "Violet"};
+// Arrays storing names of Major and Minor Colors
+const char* MajorColorNames[] = { "White", "Red", "Black", "Yellow", "Violet" };
+const char* MinorColorNames[] = { "Blue", "Orange", "Green", "Brown", "Slate" };
 
-// Array of minor colors
-const char* minor_colors[MINOR_COLOR_COUNT] = {"Blue", "Orange", "Green", "Brown", "Slate"};
+// Constants to calculate the number of colors
+int numberOfMajorColors = sizeof(MajorColorNames) / sizeof(MajorColorNames[0]);
+int numberOfMinorColors = sizeof(MinorColorNames) / sizeof(MinorColorNames[0]);
 
-// Function to get the major color based on index
-const char* get_major_color(int index) {
-    if (index < 0 || index >= MAJOR_COLOR_COUNT) {
-        return "Invalid";
-    }
-    return major_colors[index];
+// Function to convert a color pair to a string
+void ColorPairToString(const ColorPair* colorPair, char* buffer) {
+    sprintf(buffer, "%s %s", MajorColorNames[colorPair->majorColor], MinorColorNames[colorPair->minorColor]);
 }
 
-// Function to get the minor color based on index
-const char* get_minor_color(int index) {
-    if (index < 0 || index >= MINOR_COLOR_COUNT) {
-        return "Invalid";
-    }
-    return minor_colors[index];
+// Function to get the ColorPair based on pair number
+ColorPair GetColorFromPairNumber(int pairNumber) {
+    ColorPair colorPair;
+    int zeroBasedPairNumber = pairNumber - 1;
+    colorPair.majorColor = (enum MajorColor)(zeroBasedPairNumber / numberOfMinorColors);
+    colorPair.minorColor = (enum MinorColor)(zeroBasedPairNumber % numberOfMinorColors);
+    return colorPair;
 }
 
-// Function to print the color reference table
-void print_color_reference() {
+// Function to get the pair number from ColorPair
+int GetPairNumberFromColor(const ColorPair* colorPair) {
+    return colorPair->majorColor * numberOfMinorColors + colorPair->minorColor + 1;
+}
+
+// Function to print color reference manual for wiring personnel
+void printColorReferenceManual() {
     printf("%-10s%-15s%-15s\n", "Pair No.", "Major Color", "Minor Color");
 
-    int pair_number = 1;
-    for (int major = 0; major < MAJOR_COLOR_COUNT; ++major) {
-        for (int minor = 0; minor < MINOR_COLOR_COUNT; ++minor) {
-            printf("%-10d%-15s%-15s\n", pair_number, get_major_color(major), get_minor_color(minor));
-            pair_number++;
+    int pairNumber = 1;
+    for (int major = 0; major < numberOfMajorColors; ++major) {
+        for (int minor = 0; minor < numberOfMinorColors; ++minor) {
+            ColorPair colorPair = GetColorFromPairNumber(pairNumber);
+            char colorPairNames[16];
+            ColorPairToString(&colorPair, colorPairNames);
+            printf("%-10d%-15s%-15s\n", pairNumber, MajorColorNames[colorPair.majorColor], MinorColorNames[colorPair.minorColor]);
+            pairNumber++;
         }
     }
 }
